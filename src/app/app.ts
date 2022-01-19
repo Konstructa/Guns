@@ -5,6 +5,9 @@ import morgan from 'morgan';
 import cors from 'cors';
 
 import IndexRoutes from '../routes/index.routes';
+import CostumerRoutes from '../routes/costumer.routes';
+import OrderRoutes from '../routes/orders.routes';
+import StockRoutes from '../routes/stock.routes';
 
 dotenv.config();
 
@@ -37,7 +40,10 @@ export class App {
   }
 
   routes() {
-    this.app.use(IndexRoutes);
+    this.app.use('/', IndexRoutes);
+    this.app.use('/costumer', CostumerRoutes);
+    this.app.use('/order', OrderRoutes);
+    this.app.use('/stock', StockRoutes);
   }
 
   async listen() {
