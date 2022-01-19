@@ -1,4 +1,4 @@
-import { App } from './server/app';
+import { App } from './app/app';
 
 async function main() {
   const app = new App();
