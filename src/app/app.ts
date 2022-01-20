@@ -1,8 +1,10 @@
+import 'reflect-metadata';
 import express, { Application } from 'express';
 import * as dotenv from 'dotenv';
 import * as bodyParser from 'body-parser';
 import morgan from 'morgan';
 import cors from 'cors';
+import createConnection from '../database/db';
 
 import IndexRoutes from '../routes/index.routes';
 import CostumerRoutes from '../routes/costumer.routes';
@@ -16,6 +18,7 @@ export class App {
 
   // eslint-disable-next-line no-unused-vars
   constructor(private port ?: number | string) {
+    createConnection();
     this.app = express();
     this.settings();
     this.middlewares();
