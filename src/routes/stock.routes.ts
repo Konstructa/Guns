@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import * as controller from '../controllers/stock.controller';
+import { ProductController } from '../controllers/stock.controller';
 
 const router = Router();
 
 router.route('/')
-  .post(controller.createProduct);
+  .post(ProductController.createProduct);
 
 export default router;

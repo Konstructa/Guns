@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import * as controller from '../controllers/orders.controller';
+import { OrderController } from '../controllers/orders.controller';
 
 const router = Router();
 
 router.route('/')
-  .post(controller.createOrder)
-  .delete(controller.deleteOneOrder);
+  .post(OrderController.createOrder)
+  .delete(OrderController.deleteOneOrder);
 
 export default router;
