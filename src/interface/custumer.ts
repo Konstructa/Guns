@@ -1,6 +1,5 @@
 export interface Custumer {
-    id: number,
-    name: string,
-    email: string,
-    senha: string
+    id?: number,
+    user: string,
+    password: string
 }
