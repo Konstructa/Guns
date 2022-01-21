@@ -1,5 +1,7 @@
-export interface Custumer {
+ interface ICustumer {
     id?: number,
     user: string,
-    password: string
+    hashedPassword: string
 }
+
+export default ICustumer;
