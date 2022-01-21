@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import express, { Application } from 'express';
-import * as dotenv from 'dotenv';
+import 'dotenv/config';
 import * as bodyParser from 'body-parser';
 import morgan from 'morgan';
 import cors from 'cors';
@@ -10,8 +10,6 @@ import IndexRoutes from '../routes/index.routes';
 import CostumerRoutes from '../routes/costumer.routes';
 import OrderRoutes from '../routes/orders.routes';
 import StockRoutes from '../routes/stock.routes';
-
-dotenv.config();
 
 export class App {
   private app : Application;
