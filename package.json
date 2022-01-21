@@ -34,7 +34,7 @@
     "build": "rm -rf dist && tsc",
     "dev": "nodemon src/server.ts --exec ts-node",
     "start": "node dist/server.js",
-    "typeorm": "ts-node-dev ./mode_modules/typeorm/cli.js"
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js"
   },
   "keywords": [],
   "author": "",
