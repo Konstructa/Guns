@@ -31,7 +31,7 @@
 
 ## :computer: Projeto
 
-Com a Torre dos vindadores vazia após o BLIP, diversas armas secretas e únicas como o escudo do Capitão América e o Cetro de Loki foram encontradas, você pode adquirir uma aqui!
+Com a Torre dos Vingadores vazia após o BLIP, diversas armas secretas e únicas, como o escudo do Capitão América e o Cetro de Loki, foram encontradas e você pode adquirir uma aqui!
 
 **GET**
 
