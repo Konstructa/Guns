@@ -17,6 +17,7 @@ class CostumerController {
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
+
       await CostumerService.execute({ user, hashedPassword });
 
       return res.status(200)
@@ -34,10 +35,6 @@ class CostumerController {
 
   static async updateCostumer(req: Request, res: Response) {
     res.status(200).json('Rota para atualizar usuário');
-  }
-
-  static async getAllCostumers(req: Request, res: Response) {
-    res.status(200).json('Aqui está todos seus usuários');
   }
 
   static async getCustomerByOrderID(req: Request, res: Response) {

@@ -9,10 +9,6 @@ class OrderController {
     res.status(200).json('Rota para deletar pedidos');
   }
 
-  static async getAllOrders(req: Request, res: Response) {
-    res.status(200).json('Rota para pegar todos pedidos');
-  }
-
   static async getOneOrder(req: Request, res: Response) {
     res.status(200).json('Rota para pegar um pedidos');
   }
