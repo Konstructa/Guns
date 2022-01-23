@@ -40,7 +40,7 @@ class OrderController {
         );
       }
 
-      await OrderService.execute(reciveOrder.productsQuantity, existsProduct, existsCostumer);
+      await OrderService.insert(reciveOrder.productsQuantity, existsProduct, existsCostumer);
 
       await StockService.update(reciveOrder.product, newQuantity);
 

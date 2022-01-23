@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 import { Order } from '../entities/Order';
 
 class OrderService {
-  static async execute(productsQuantity: number, existsProduct: any, existsCostumer: any) {
+  static async insert(productsQuantity: number, existsProduct: any, existsCostumer: any) {
     const createOrder = new Order();
     createOrder.costumer = existsCostumer;
     createOrder.product = existsProduct;

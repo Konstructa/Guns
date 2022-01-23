@@ -18,7 +18,7 @@ class CostumerController {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      await CostumerService.execute({ user, hashedPassword });
+      await CostumerService.insert({ user, hashedPassword });
 
       return res.status(201)
         .json({

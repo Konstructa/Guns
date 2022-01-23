@@ -3,7 +3,7 @@ import { Costumer } from '../entities/Costumer';
 import ICostumer from '../interface/custumer';
 
 class CostumerService {
-  static async execute({ user, hashedPassword }:ICostumer) {
+  static async insert({ user, hashedPassword }:ICostumer) {
     const costumers = await getRepository(Costumer)
       .createQueryBuilder()
       .insert()
