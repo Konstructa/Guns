@@ -3,7 +3,7 @@ import { Product } from '../entities/Product';
 import { IProduct } from '../interface/product';
 
 class StockService {
-  static async execute({ name, quantity }: IProduct) {
+  static async insert({ name, quantity }: IProduct) {
     const product = await getRepository(Product)
       .createQueryBuilder()
       .insert()
@@ -16,6 +16,15 @@ class StockService {
       )
       .execute();
     console.log(product);
+  }
+
+  static async update(id: number, updateQuantityProduct: number) {
+    await getRepository(Product)
+      .createQueryBuilder()
+      .update(Product)
+      .set({ quantity: updateQuantityProduct })
+      .where('id = :id', { id })
+      .execute();
   }
 }
 
