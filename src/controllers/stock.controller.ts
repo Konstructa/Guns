@@ -41,10 +41,6 @@ class StockController {
       return res.status(500).json({ error: 'Problemas com o servidor' });
     }
   }
-
-  static async getProductDetailsByOrderID(req: Request, res: Response) {
-    res.status(200).json('Aqui está os detalhes do seu produto por OrderID');
-  }
 }
 
 export { StockController };
