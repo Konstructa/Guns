@@ -9,4 +9,10 @@ router.route('/')
 router.route('/:id')
   .delete(OrderController.deleteOneOrder);
 
+router.route('/customerByOrderID/:id')
+  .get(OrderController.getCustomerByOrderID);
+
+router.route('/productDetailsByOrderID/:id')
+  .get(OrderController.getProductDetailsByOrderID);
+
 export default router;
