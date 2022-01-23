@@ -41,7 +41,7 @@ order/productDetailsByOrderID/{id}
 
 **POST**
 
-POST - costumer
+costumer/
 
 ```
 }
@@ -50,7 +50,7 @@ POST - costumer
 } 
 ```
 
-POST - stock/
+stock/
 ```
 }
     "name": 
@@ -58,7 +58,7 @@ POST - stock/
 } 
 ```
 
-POST - order/
+order/
 ```
 }
     "productsQuantity": 
@@ -70,6 +70,18 @@ POST - order/
 **DELETE**
 
 order/{id}
+
+**PATCH**
+
+/stock/{id}
+{   
+    "quantity": 
+}
+
+## DIAGRAMA
+<p align="center" >
+<img alt = "disgrama" src="./diagrama.png">
+</p>
 
 
 ## :hammer: Instalação
