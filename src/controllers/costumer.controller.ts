@@ -36,10 +36,6 @@ class CostumerController {
   static async updateCostumer(req: Request, res: Response) {
     res.status(200).json('Rota para atualizar usuário');
   }
-
-  static async getCustomerByOrderID(req: Request, res: Response) {
-    res.status(200).json('Aqui está seu usuário especifico');
-  }
 }
 
 export { CostumerController };
