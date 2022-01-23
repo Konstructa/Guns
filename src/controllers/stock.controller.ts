@@ -14,7 +14,7 @@ class StockController {
             error: 'Você não inseriu valores válidos cheque novamente!',
           });
       }
-      await StockService.execute({ name, quantity });
+      await StockService.insert({ name, quantity });
 
       return res.status(201)
         .json({
@@ -25,7 +25,24 @@ class StockController {
     }
   }
 
-  static async GetProductDetailsByOrderID(req: Request, res: Response) {
+  static async updateProduct(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
+      const { ...updateQuantityProduct } = req.body;
+
+      if (updateQuantityProduct.quantity < 0) {
+        return res.status(400).json('Valor não pode ser negativo');
+      }
+
+      await StockService.update(id, updateQuantityProduct.quantity);
+
+      return res.status(200).json('Produto atualizado com sucesso');
+    } catch (error) {
+      return res.status(500).json({ error: 'Problemas com o servidor' });
+    }
+  }
+
+  static async getProductDetailsByOrderID(req: Request, res: Response) {
     res.status(200).json('Aqui está os detalhes do seu produto por OrderID');
   }
 }
