@@ -20,12 +20,12 @@ class CostumerController {
 
       await CostumerService.execute({ user, hashedPassword });
 
-      return res.status(200)
+      return res.status(201)
         .json({
           sucess: 'Dados registrados com sucesso!',
         });
     } catch (e) {
-      return res.status(400).json(e);
+      return res.status(500).json('Erro interno');
     }
   }
 
