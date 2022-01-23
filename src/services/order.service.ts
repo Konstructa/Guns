@@ -17,14 +17,12 @@ class OrderService {
   }
 
   static async delete(id: number) {
-    const teeste1 = await getRepository(Order)
+    await getRepository(Order)
       .createQueryBuilder()
       .delete()
       .from(Order)
       .where('id = :id', { id })
       .execute();
-
-    console.log(teeste1);
   }
 }
 
