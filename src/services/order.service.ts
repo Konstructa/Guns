@@ -24,6 +24,26 @@ class OrderService {
       .where('id = :id', { id })
       .execute();
   }
+
+  static async findCostumer(id: number) {
+    const getCostumerDetailsById = await getRepository(Order)
+      .createQueryBuilder('orders')
+      .relation(Order, 'costumer')
+      .of(id)
+      .loadOne();
+
+    return getCostumerDetailsById;
+  }
+
+  static async findProduct(id: number) {
+    const getProductDetailsById = await getRepository(Order)
+      .createQueryBuilder('orders')
+      .relation(Order, 'product')
+      .of(id)
+      .loadOne();
+
+    return getProductDetailsById;
+  }
 }
 
 export { OrderService };
