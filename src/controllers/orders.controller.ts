@@ -19,12 +19,12 @@ class OrderController {
       const existsProduct = await getRepository(Product)
         .createQueryBuilder('navy.stock')
         .where('id = :id', { id: reciveOrder.product })
-        .getOne();
+        .getOneOrFail();
 
       const existsCostumer = await getRepository(Costumer)
         .createQueryBuilder('navy.costumers')
         .where('id = :id', { id: reciveOrder.costumer })
-        .getOne();
+        .getOneOrFail();
 
       const quantityInStock = Number(existsProduct?.quantity);
 
@@ -50,7 +50,7 @@ class OrderController {
         },
       );
     } catch (error) {
-      res.status(500).json('Problemas de resposta no servidor');
+      res.status(400).json('Erros encontrados no pedido');
     }
 
     return res.status(201);
@@ -99,12 +99,9 @@ class OrderController {
         .where('id = :id', { id })
         .getOneOrFail();
 
-      const getProductDetailsById = await getRepository(Order)
-        .createQueryBuilder('orders')
-        .leftJoinAndSelect('orders.product', 'product')
-        .getMany();
+      const result = await OrderService.findProduct(id);
 
-      res.status(200).json(getProductDetailsById[0]);
+      res.status(200).json(result);
     } catch (error) {
       res.status(400).json({ error: 'Insira um ID válido!' });
     }
@@ -121,14 +118,11 @@ class OrderController {
         .where('id = :id', { id })
         .getOneOrFail();
 
-      const getCostumerDetailsById = await getRepository(Order)
-        .createQueryBuilder('orders')
-        .leftJoinAndSelect('orders.costumer', 'costumer')
-        .getMany();
+      const result = await OrderService.findCostumer(id);
 
-      res.status(200).json(getCostumerDetailsById[0]);
+      res.status(200).json(result);
     } catch (error) {
-      res.status(400).json({ error: 'Insira um ID válido!' });
+      res.status(400).json({ error: 'Insira um ID existente!' });
     }
   }
 }
