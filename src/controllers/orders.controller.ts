@@ -67,15 +67,14 @@ class OrderController {
         .where('id = :id', { id })
         .getOneOrFail();
 
-      const conRepository = getRepository(Order);
-      const relation = await conRepository.findOne(
-        id,
-        { relations: ['product'] },
-      );
+      const getProductId = await getRepository(Order)
+        .createQueryBuilder('orders')
+        .leftJoinAndSelect('orders.product', 'product')
+        .getMany();
 
-      const productId = Number(relation?.product.id);
+      const productId = getProductId[0].product.id;
 
-      const productIsAvailabe = (relation?.product.quantity);
+      const productIsAvailabe = (getProductId[0].product.quantity);
 
       const addProductsOffDeletedOrder = Number(productIsAvailabe)
       + Number(existsOrder.productsQuantity);
