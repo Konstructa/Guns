@@ -1,4 +1,3 @@
-/* import { connect } from '../database/db'; */
 import { getRepository } from 'typeorm';
 import { Costumer } from '../entities/Costumer';
 import ICostumer from '../interface/custumer';
