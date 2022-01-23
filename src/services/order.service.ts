@@ -8,13 +8,23 @@ class OrderService {
     createOrder.product = existsProduct;
     createOrder.productsQuantity = productsQuantity;
 
-    const product1 = await getRepository(Order)
+    await getRepository(Order)
       .createQueryBuilder()
       .insert()
       .into(Order)
       .values(createOrder)
       .execute();
-    console.log(product1);
+  }
+
+  static async delete(id: number) {
+    const teeste1 = await getRepository(Order)
+      .createQueryBuilder()
+      .delete()
+      .from(Order)
+      .where('id = :id', { id })
+      .execute();
+
+    console.log(teeste1);
   }
 }
 
