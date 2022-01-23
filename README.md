@@ -35,8 +35,13 @@ Com a Torre dos Vingadores vazia após o BLIP, diversas armas secretas e únicas
 
 **GET**
 
+order/customerByOrderID/{id}
+
+order/productDetailsByOrderID/{id}
 
 **POST**
+
+POST - costumer
 
 ```
 }
@@ -45,7 +50,26 @@ Com a Torre dos Vingadores vazia após o BLIP, diversas armas secretas e únicas
 } 
 ```
 
+POST - stock/
+```
+}
+    "name": 
+    "quantity": 
+} 
+```
+
+POST - order/
+```
+}
+    "productsQuantity": 
+    "product": (id)
+    "costumer": (id)
+} 
+```
+
 **DELETE**
+
+order/{id}
 
 
 ## :hammer: Instalação
