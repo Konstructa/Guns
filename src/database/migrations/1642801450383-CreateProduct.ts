@@ -20,8 +20,8 @@ export class CreateProduct1642801450383 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'description',
-            type: 'text',
+            name: 'quantity',
+            type: 'int',
             isNullable: false,
           },
         ],

@@ -1,6 +1,8 @@
 /* eslint-disable class-methods-use-this */
 import {
-  MigrationInterface, QueryRunner, Table, TableForeignKey,
+  MigrationInterface,
+  QueryRunner,
+  Table,
 } from 'typeorm';
 
 export class CreateOrder1642801837198 implements MigrationInterface {
@@ -17,22 +19,9 @@ export class CreateOrder1642801837198 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'name',
-            type: 'varchar(210)',
-            isNullable: false,
-          },
-          {
-            name: 'item',
-            type: 'varchar(210)',
-            isNullable: false,
-          },
-          {
-            name: 'costumerID',
+            name: 'productsQuantity',
             type: 'int',
-          },
-          {
-            name: 'productId',
-            type: 'int',
+            isNullable: false,
           },
           {
             name: 'created_at',
@@ -42,20 +31,6 @@ export class CreateOrder1642801837198 implements MigrationInterface {
         ],
       }),
     );
-
-    await queryRunner.createForeignKey('Orders', new TableForeignKey({
-      columnNames: ['costumerID'],
-      referencedColumnNames: ['id'],
-      referencedTableName: 'Costumers',
-      onDelete: 'CASCADE',
-    }));
-
-    await queryRunner.createForeignKey('Orders', new TableForeignKey({
-      columnNames: ['productID'],
-      referencedColumnNames: ['id'],
-      referencedTableName: 'Stock',
-      onDelete: 'CASCADE',
-    }));
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
