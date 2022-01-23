@@ -88,8 +88,48 @@ class OrderController {
     }
   }
 
-  static async getOneOrder(req: Request, res: Response) {
-    res.status(200).json('Rota para pegar um pedidos');
+  static async getProductDetailsByOrderID(req: Request, res: Response) {
+    try {
+      const orderID = req.params.id;
+
+      const id = Number.parseInt(orderID, 10);
+
+      await getRepository(Order)
+        .createQueryBuilder('orders')
+        .where('id = :id', { id })
+        .getOneOrFail();
+
+      const getProductDetailsById = await getRepository(Order)
+        .createQueryBuilder('orders')
+        .leftJoinAndSelect('orders.product', 'product')
+        .getMany();
+
+      res.status(200).json(getProductDetailsById[0]);
+    } catch (error) {
+      res.status(400).json({ error: 'Insira um ID válido!' });
+    }
+  }
+
+  static async getCustomerByOrderID(req: Request, res: Response) {
+    try {
+      const orderID = req.params.id;
+
+      const id = Number.parseInt(orderID, 10);
+
+      await getRepository(Order)
+        .createQueryBuilder('orders')
+        .where('id = :id', { id })
+        .getOneOrFail();
+
+      const getCostumerDetailsById = await getRepository(Order)
+        .createQueryBuilder('orders')
+        .leftJoinAndSelect('orders.costumer', 'costumer')
+        .getMany();
+
+      res.status(200).json(getCostumerDetailsById[0]);
+    } catch (error) {
+      res.status(400).json({ error: 'Insira um ID válido!' });
+    }
   }
 }
 
