@@ -4,8 +4,10 @@ import { CostumerController } from '../controllers/costumer.controller';
 const router = Router();
 
 router.route('/')
-  .post(CostumerController.createCostumer)
-  .delete(CostumerController.deleteCostumer)
-  .put(CostumerController.updateCostumer);
+  .post(CostumerController.createCostumer);
+
+router.route('/:id')
+  .put(CostumerController.updateCostumer)
+  .delete(CostumerController.deleteCostumer);
 
 export default router;
