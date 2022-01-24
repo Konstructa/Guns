@@ -7,11 +7,11 @@
     <img alt = "Issues" src="https://img.shields.io/github/issues/Konstructa/Secret-Guns-API">
 </p>
 
-<p align="center"> 
+<h3 align="center"> 
     <a href="#rocket-tecnologias">Tecnologias</a>          |
     <a href="#computer-projeto">Projeto</a>          |
     <a href="#hammer-instalação">Instalação</a>
-</p>
+</h3>
 
 ## :rocket: Tecnologias
 
