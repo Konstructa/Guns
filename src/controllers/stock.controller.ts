@@ -28,7 +28,7 @@ class StockController {
   static async updateProduct(req: Request, res: Response) {
     try {
       const id = Number(req.params.id);
-      const { ...updateQuantityProduct } = req.body;
+      const { updateQuantityProduct } = req.body;
 
       if (updateQuantityProduct.quantity < 0) {
         return res.status(400).json('Valor não pode ser negativo');
@@ -39,6 +39,15 @@ class StockController {
       return res.status(200).json('Produto atualizado com sucesso');
     } catch (error) {
       return res.status(500).json({ error: 'Problemas com o servidor' });
+    }
+  }
+
+  static async getAllProducts(req: Request, res: Response) {
+    try {
+      const AllProducts = await StockService.getAll();
+      res.status(200).json(AllProducts);
+    } catch (error) {
+      res.status(500).json({ error: 'Servidor não está funcionando' });
     }
   }
 }
