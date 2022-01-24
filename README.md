@@ -35,6 +35,8 @@ Com a Torre dos Vingadores vazia após o BLIP, diversas armas secretas e únicas
 
 **GET**
 
+stock/
+
 order/customerByOrderID/{id}
 
 order/productDetailsByOrderID/{id}
@@ -74,9 +76,23 @@ order/{id}
 **PATCH**
 
 /stock/{id}
+```
 {   
     "quantity": 
 }
+```
+
+**PUT**
+
+costumer/{id}
+```
+{
+    "user": 
+    "password": 
+}
+
+```
+
 
 ## DIAGRAMA
 <p align="center" >
