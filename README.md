@@ -72,6 +72,7 @@ order/
 **DELETE**
 
 order/{id}
+
 costumer/{id}
 
 **PATCH**
@@ -95,13 +96,13 @@ costumer/{id}
 ```
 
 
-## DIAGRAMA
+## :clipboard: DIAGRAMA
 <p align="center" >
 <img alt = "disgrama" src="./diagrama.png">
 </p>
 
 
-## REGRAS DE NEGÓCIOS
+## :handshake: REGRAS DE NEGÓCIOS
 
 Uma order só poderá ser criada se houver estoque suficiente
 
