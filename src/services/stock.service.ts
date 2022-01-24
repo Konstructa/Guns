@@ -26,6 +26,14 @@ class StockService {
       .where('id = :id', { id })
       .execute();
   }
+
+  static async getAll() {
+    const allProducts = await getRepository(Product)
+      .createQueryBuilder()
+      .getMany();
+
+    return allProducts;
+  }
 }
 
 export { StockService };
