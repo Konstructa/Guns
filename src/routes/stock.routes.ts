@@ -4,7 +4,8 @@ import { StockController } from '../controllers/stock.controller';
 const router = Router();
 
 router.route('/')
-  .post(StockController.createProduct);
+  .post(StockController.createProduct)
+  .get(StockController.getAllProducts);
 
 router.route('/:id')
   .patch(StockController.updateProduct);
