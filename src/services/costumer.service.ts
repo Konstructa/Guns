@@ -15,8 +15,7 @@ class CostumerService {
         },
       )
       .execute();
-    console.log(costumers);
-    return costumers;
+    return costumers.generatedMaps[0];
   }
 
   static async update(id: number, user: string, password: string) {

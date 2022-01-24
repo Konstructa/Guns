@@ -20,11 +20,12 @@ class CostumerController {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      await CostumerService.insert({ user, hashedPassword });
+      const createAndReturnId = await CostumerService.insert({ user, hashedPassword });
 
       return res.status(201)
         .json({
           sucess: 'Dados registrados com sucesso!',
+          id: createAndReturnId.id,
         });
     } catch (e) {
       return res.status(500).json('Erro interno');
