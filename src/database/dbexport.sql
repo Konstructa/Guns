@@ -83,7 +83,6 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id`),
   KEY `FK_ProductOrder` (`productId`),
   KEY `FK_CostumerOrders` (`costumerId`),
-  CONSTRAINT `FK_CostumerOrder` FOREIGN KEY (`costumerId`) REFERENCES `costumers` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_CostumerOrders` FOREIGN KEY (`costumerId`) REFERENCES `costumers` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_ProductOrder` FOREIGN KEY (`productId`) REFERENCES `stock` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -95,7 +94,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (6,2,2,1,'2022-01-23 19:10:35'),(8,11,1,1,'2022-01-23 20:13:49'),(9,5,2,1,'2022-01-23 20:13:59'),(12,12,2,NULL,'2022-01-23 21:03:34');
+INSERT INTO `orders` VALUES (6,2,2,1,'2022-01-23 19:10:35'),(8,11,1,1,'2022-01-23 20:13:49'),(9,5,2,1,'2022-01-23 20:13:59');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,4 +132,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-24 11:13:36
+-- Dump completed on 2022-01-24 11:28:43
