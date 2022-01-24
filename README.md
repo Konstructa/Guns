@@ -72,6 +72,7 @@ order/
 **DELETE**
 
 order/{id}
+costumer/{id}
 
 **PATCH**
 
