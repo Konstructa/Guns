@@ -21,7 +21,7 @@ class Order {
     @JoinColumn()
       product: Product;
 
-    @OneToOne(() => Costumer)
+    @OneToOne(() => Costumer, { onDelete: 'CASCADE' })
     @JoinColumn()
       costumer: Costumer;
 
