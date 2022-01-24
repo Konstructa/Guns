@@ -18,6 +18,24 @@ class CostumerService {
     console.log(costumers);
     return costumers;
   }
+
+  static async update(id: number, user: string, password: string) {
+    await getRepository(Costumer)
+      .createQueryBuilder()
+      .update(Costumer)
+      .set({ user, password })
+      .where('id = :id', { id })
+      .execute();
+  }
+
+  static async delete(id: number) {
+    await getRepository(Costumer)
+      .createQueryBuilder()
+      .delete()
+      .from(Costumer)
+      .where('id = :id', { id })
+      .execute();
+  }
 }
 
 export { CostumerService };
