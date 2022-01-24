@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
+import { getRepository } from 'typeorm';
+import { Costumer } from '../entities/Costumer';
 import { CostumerService } from '../services/costumer.service';
 
 class CostumerController {
@@ -30,11 +32,44 @@ class CostumerController {
   }
 
   static async deleteCostumer(req: Request, res: Response) {
-    res.status(200).json('Rota para deletar usuário');
+    try {
+      const id = Number(req.params.id);
+
+      await getRepository(Costumer)
+        .createQueryBuilder('navy.costumers')
+        .where('id = :id', { id })
+        .getOneOrFail();
+
+      await CostumerService.delete(id);
+    } catch (error) {
+      res.status(500).json(error);
+    }
   }
 
   static async updateCostumer(req: Request, res: Response) {
-    res.status(200).json('Rota para atualizar usuário');
+    try {
+      const id = Number.parseInt(req.params.id, 10);
+      const { user, password } = req.body;
+
+      await getRepository(Costumer)
+        .createQueryBuilder('navy.costumers')
+        .where('id = :id', { id })
+        .getOneOrFail();
+
+      if (user.length === 0
+        || password.length === 0
+      ) {
+        return res.status(400).json({ error: 'Insira os dados necessários!' });
+      }
+
+      const newPassword = await bcrypt.hash(password, 10);
+
+      await CostumerService.update(id, user, newPassword);
+
+      return res.status(200).json({ sucess: 'Dados atualizados com sucesso' });
+    } catch (error) {
+      return res.status(500).json('Verifique seus dados');
+    }
   }
 }
 
