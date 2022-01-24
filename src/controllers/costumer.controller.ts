@@ -41,8 +41,10 @@ class CostumerController {
         .getOneOrFail();
 
       await CostumerService.delete(id);
+
+      res.status(202).json({ suscess: 'Usuário deletado com sucesso!' });
     } catch (error) {
-      res.status(500).json(error);
+      res.status(404).json('ID não encontrado');
     }
   }
 
@@ -68,7 +70,7 @@ class CostumerController {
 
       return res.status(200).json({ sucess: 'Dados atualizados com sucesso' });
     } catch (error) {
-      return res.status(500).json('Verifique seus dados');
+      return res.status(406).json('Verifique seus dados');
     }
   }
 }

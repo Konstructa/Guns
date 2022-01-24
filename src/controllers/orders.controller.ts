@@ -82,7 +82,7 @@ class OrderController {
       await OrderService.delete(id);
       await StockService.update(productId, addProductsOffDeletedOrder);
 
-      res.status(200).json({ suscess: 'Pedido deletado' });
+      res.status(202).json({ suscess: 'Pedido deletado' });
     } catch (error) {
       res.status(500).json({ error: 'Erro interno' });
     }
@@ -101,7 +101,7 @@ class OrderController {
 
       const result = await OrderService.findProduct(id);
 
-      res.status(200).json(result);
+      res.status(302).json(result);
     } catch (error) {
       res.status(400).json({ error: 'Insira um ID válido!' });
     }
@@ -120,7 +120,7 @@ class OrderController {
 
       const result = await OrderService.findCostumer(id);
 
-      res.status(200).json(result);
+      res.status(302).json(result);
     } catch (error) {
       res.status(400).json({ error: 'Insira um ID existente!' });
     }

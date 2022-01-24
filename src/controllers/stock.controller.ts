@@ -45,7 +45,7 @@ class StockController {
   static async getAllProducts(req: Request, res: Response) {
     try {
       const AllProducts = await StockService.getAll();
-      res.status(200).json(AllProducts);
+      res.status(302).json(AllProducts);
     } catch (error) {
       res.status(500).json({ error: 'Servidor não está funcionando' });
     }
