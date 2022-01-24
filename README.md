@@ -101,6 +101,16 @@ costumer/{id}
 </p>
 
 
+## REGRAS DE NEGÓCIOS
+
+Uma order só poderá ser criada se houver estoque suficiente
+
+Se uma order for criada, seus produtos devem ser subtraídos do estoque
+
+Caso sua conta seja deletado o pedido é dado concluído e deletado junto
+
+Caso apenas seu pedido seja deletado, o produto volta para o estoque
+
 ## :hammer: Instalação
 
 Clone este repositório e utilize o seguinte comando no terminal:
