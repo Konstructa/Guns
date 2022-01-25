@@ -1,8 +1,8 @@
-import { Router, Response as ExResponse } from 'express';
+import { Router, Response, Request } from 'express';
 
 const router = Router();
 
-router.get('/', (_req, res: ExResponse) => {
+router.get('/', (req: Request, res: Response) => {
   res.status(200).json({
     message: 'Hello World!',
   });
