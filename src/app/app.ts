@@ -10,6 +10,7 @@ import IndexRoutes from '../routes/index.routes';
 import CostumerRoutes from '../routes/costumer.routes';
 import OrderRoutes from '../routes/orders.routes';
 import StockRoutes from '../routes/stock.routes';
+import ErrorRoutes from '../routes/error.routes';
 
 export class App {
   private app : Application;
@@ -41,10 +42,11 @@ export class App {
   }
 
   routes() {
-    this.app.use('/', IndexRoutes);
+    this.app.use(IndexRoutes);
     this.app.use('/costumer', CostumerRoutes);
     this.app.use('/order', OrderRoutes);
     this.app.use('/stock', StockRoutes);
+    this.app.use(ErrorRoutes);
   }
 
   async listen() {
