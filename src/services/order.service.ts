@@ -16,7 +16,7 @@ class OrderService {
       .execute();
   }
 
-  static async delete(id: number) {
+  static async delete(id: string) {
     await getRepository(Order)
       .createQueryBuilder()
       .delete()
@@ -25,7 +25,7 @@ class OrderService {
       .execute();
   }
 
-  static async findCostumer(id: number) {
+  static async findCostumer(id: string) {
     const getCostumerDetailsById = await getRepository(Order)
       .createQueryBuilder('orders')
       .relation(Order, 'costumer')
@@ -35,7 +35,7 @@ class OrderService {
     return getCostumerDetailsById;
   }
 
-  static async findProduct(id: number) {
+  static async findProduct(id: string) {
     const getProductDetailsById = await getRepository(Order)
       .createQueryBuilder('orders')
       .relation(Order, 'product')
