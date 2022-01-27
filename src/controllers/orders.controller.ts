@@ -60,11 +60,9 @@ class OrderController {
     try {
       const orderID = req.params.id;
 
-      const id = Number.parseInt(orderID, 10);
-
       const existsOrder = await getRepository(Order)
         .createQueryBuilder('orders')
-        .where('id = :id', { id })
+        .where('id = :id', { orderID })
         .getOneOrFail();
 
       const getProductId = await getRepository(Order)
@@ -79,7 +77,7 @@ class OrderController {
       const addProductsOffDeletedOrder = Number(productIsAvailabe)
       + Number(existsOrder.productsQuantity);
 
-      await OrderService.delete(id);
+      await OrderService.delete(orderID);
       await StockService.update(productId, addProductsOffDeletedOrder);
 
       res.status(202).json({ suscess: 'Pedido deletado' });
@@ -92,14 +90,12 @@ class OrderController {
     try {
       const orderID = req.params.id;
 
-      const id = Number.parseInt(orderID, 10);
-
       await getRepository(Order)
         .createQueryBuilder('orders')
-        .where('id = :id', { id })
+        .where('id = :id', { orderID })
         .getOneOrFail();
 
-      const result = await OrderService.findProduct(id);
+      const result = await OrderService.findProduct(orderID);
 
       res.status(302).json(result);
     } catch (error) {
@@ -118,7 +114,7 @@ class OrderController {
         .where('id = :id', { id })
         .getOneOrFail();
 
-      const result = await OrderService.findCostumer(id);
+      const result = await OrderService.findCostumer(orderID);
 
       res.status(302).json(result);
     } catch (error) {

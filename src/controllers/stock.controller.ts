@@ -4,7 +4,10 @@ import { StockService } from '../services/stock.service';
 class StockController {
   static async createProduct(req: Request, res: Response) {
     try {
-      const { name, quantity } = req.body;
+      const {
+        name, description,
+        price, quantity,
+      } = req.body;
 
       if (quantity.length === 0
         || name.length === 0
@@ -14,25 +17,32 @@ class StockController {
             error: 'Você não inseriu valores válidos cheque novamente!',
           });
       }
-      await StockService.insert({ name, quantity });
+      await StockService.insert({
+        name,
+        description,
+        price,
+        quantity,
+      });
 
       return res.status(201)
         .json({
           sucess: 'Produto registrado com sucesso!',
         });
     } catch (e) {
-      return res.status(500).json('Erro interno');
+      return res.status(500).json(e);
     }
   }
 
   static async updateProduct(req: Request, res: Response) {
     try {
-      const id = Number(req.params.id);
+      const { id } = req.params;
       const updateQuantityProduct = Number(req.body.quantity);
 
       if (updateQuantityProduct < 0) {
         return res.status(400).json('Valor não pode ser negativo');
       }
+
+      // verifyid
 
       await StockService.update(id, updateQuantityProduct);
 
