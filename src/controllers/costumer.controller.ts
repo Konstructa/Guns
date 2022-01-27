@@ -1,17 +1,18 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { getRepository } from 'typeorm';
+
 import { Costumer } from '../entities/Costumer';
 import { CostumerService } from '../services/costumer.service';
 
 class CostumerController {
   static async createCostumer(req: Request, res: Response) {
     try {
-      const { user, password } = req.body;
+      const {
+        name, username, email, password, gems,
+      } = req.body;
 
-      if (password.length === 0
-        || user.length === 0
-      ) {
+      if (!name || !username || !email || !password || !gems) {
         return res.status(400)
           .send({
             error: 'Você não inseriu valores válidos cheque novamente!',
@@ -20,21 +21,23 @@ class CostumerController {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const createAndReturnId = await CostumerService.insert({ user, hashedPassword });
+      const createAndReturnId = await CostumerService.insert({
+        name, username, email, hashedPassword, gems,
+      });
 
       return res.status(201)
         .json({
           sucess: 'Dados registrados com sucesso!',
-          id: createAndReturnId.id,
+          id: createAndReturnId,
         });
     } catch (e) {
-      return res.status(500).json('Erro interno');
+      return res.status(500).json('Usuário e/ou email já existem!');
     }
   }
 
   static async deleteCostumer(req: Request, res: Response) {
     try {
-      const id = Number(req.params.id);
+      const { id } = req.params;
 
       await getRepository(Costumer)
         .createQueryBuilder('navy.costumers')
@@ -51,27 +54,32 @@ class CostumerController {
 
   static async updateCostumer(req: Request, res: Response) {
     try {
-      const id = Number.parseInt(req.params.id, 10);
-      const { user, password } = req.body;
+      const { id } = req.params;
+      const {
+        name, username, email, password, gems,
+      } = req.body;
+      console.log(name, username, email, password, gems);
 
-      await getRepository(Costumer)
+      const nedd = await getRepository(Costumer)
         .createQueryBuilder('navy.costumers')
         .where('id = :id', { id })
         .getOneOrFail();
+      console.log(nedd);
 
-      if (user.length === 0
-        || password.length === 0
+      /* if (updateRequest
       ) {
         return res.status(400).json({ error: 'Insira os dados necessários!' });
-      }
+      } */
 
-      const newPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-      await CostumerService.update(id, user, newPassword);
+      await CostumerService.update(id, {
+        name, username, email, hashedPassword, gems,
+      });
 
       return res.status(200).json({ sucess: 'Dados atualizados com sucesso' });
     } catch (error) {
-      return res.status(406).json('Verifique seus dados');
+      return res.status(406).json(error);
     }
   }
 }
