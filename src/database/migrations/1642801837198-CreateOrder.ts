@@ -18,7 +18,7 @@ export class CreateOrder1642801837198 implements MigrationInterface {
             generationStrategy: 'uuid',
           },
           {
-            name: 'productsQuantity',
+            name: 'products_quantity',
             type: 'int',
             isNullable: false,
           },
@@ -28,12 +28,12 @@ export class CreateOrder1642801837198 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'costumerId',
+            name: 'costumer_id',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'productId',
+            name: 'product_id',
             type: 'varchar',
             isNullable: false,
           },
@@ -46,13 +46,13 @@ export class CreateOrder1642801837198 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'FK_CostumerOrder',
-            columnNames: ['costumerId'],
+            columnNames: ['costumer_id'],
             referencedTableName: 'Costumers',
             referencedColumnNames: ['id'],
           },
           {
             name: 'FK_ProductOrder',
-            columnNames: ['productId'],
+            columnNames: ['product_id'],
             referencedTableName: 'Stock',
             referencedColumnNames: ['id'],
           },
