@@ -11,11 +11,14 @@ import { Product } from './Product';
 
 @Entity('Orders')
 class Order {
-    @PrimaryGeneratedColumn('increment')
-      id: number;
+  @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column()
       productsQuantity: number;
+
+    @Column()
+      amount: number;
 
     @OneToOne(() => Product)
     @JoinColumn()

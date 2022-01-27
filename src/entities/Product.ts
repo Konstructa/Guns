@@ -6,14 +6,20 @@ import {
 
 @Entity('Stock')
 class Product {
-    @PrimaryGeneratedColumn('increment')
-      id: number;
+  @PrimaryGeneratedColumn('uuid')
+    id: string;
 
-    @Column()
-      name: string;
+  @Column()
+    name: string;
 
-    @Column()
-      quantity:number;
+  @Column()
+    description:string;
+
+  @Column()
+    price: number;
+
+  @Column()
+    quantity: number;
 }
 
 export { Product };
