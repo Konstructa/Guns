@@ -1,7 +1,10 @@
  interface ICustumer {
-    id?: number,
-    user: string,
-    hashedPassword: string
+    id?: string,
+    name: string,
+    username: string,
+    email:string,
+    hashedPassword: string,
+    gems: number,
 }
 
 export default ICustumer;
