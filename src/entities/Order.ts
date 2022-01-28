@@ -6,6 +6,7 @@ import {
   JoinColumn,
   CreateDateColumn,
 } from 'typeorm';
+import { IsInt } from 'class-validator';
 import { Costumer } from './Costumer';
 import { Product } from './Product';
 
@@ -15,7 +16,8 @@ class Order {
     id: string;
 
     @Column()
-      productsQuantity: number;
+    @IsInt({ message: 'A quantidade é em némeros inteiros!' })
+      products_quantity: number;
 
     @Column()
       amount: number;
