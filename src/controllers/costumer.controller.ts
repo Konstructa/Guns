@@ -21,17 +21,22 @@ class CostumerController {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const createAndReturnId = await CostumerService.insert({
+      const create = await CostumerService.insert({
         name, username, email, hashedPassword, gems,
       });
 
-      return res.status(201)
-        .json({
-          sucess: 'Dados registrados com sucesso!',
-          id: createAndReturnId,
-        });
+      if (create.length === 0) {
+        return res.status(201)
+          .json({
+            sucess: 'Dados registrados com sucesso!',
+          });
+      }
+
+      const result = create.map((e) => e.constraints);
+
+      return res.status(406).json({ error: result });
     } catch (e) {
-      return res.status(500).json('Usuário e/ou email já existem!');
+      return res.status(406).json('E-mail ou Usuário já existe!');
     }
   }
 
@@ -65,11 +70,6 @@ class CostumerController {
         .where('id = :id', { id })
         .getOneOrFail();
       console.log(nedd);
-
-      /* if (updateRequest
-      ) {
-        return res.status(400).json({ error: 'Insira os dados necessários!' });
-      } */
 
       const hashedPassword = await bcrypt.hash(password, 10);
 

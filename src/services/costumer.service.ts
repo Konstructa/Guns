@@ -17,7 +17,7 @@ class CostumerService {
     const error = await validate(teste);
 
     if (error.length === 0) {
-      const costumers = await getRepository(Costumer)
+      await getRepository(Costumer)
         .createQueryBuilder()
         .insert()
         .into(Costumer)
@@ -31,8 +31,8 @@ class CostumerService {
           },
         )
         .execute();
-      return costumers.generatedMaps[0];
     }
+
     return error;
   }
 
