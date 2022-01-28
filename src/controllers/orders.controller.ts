@@ -12,7 +12,7 @@ class OrderController {
     try {
       const reciveOrder: IOrder = req.body;
 
-      if (!reciveOrder.productsQuantity || reciveOrder.productsQuantity <= 0) {
+      if (!reciveOrder.products_quantity || reciveOrder.products_quantity <= 0) {
         return res.status(400).json('Quantidade não pode ser 0');
       }
 
@@ -30,8 +30,8 @@ class OrderController {
 
       let newQuantity = 0;
 
-      if (reciveOrder.productsQuantity <= quantityInStock) {
-        newQuantity = quantityInStock - reciveOrder.productsQuantity;
+      if (reciveOrder.products_quantity <= quantityInStock) {
+        newQuantity = quantityInStock - reciveOrder.products_quantity;
       } else {
         return res.status(400).json(
           {
@@ -40,7 +40,7 @@ class OrderController {
         );
       }
 
-      await OrderService.insert(reciveOrder.productsQuantity, existsProduct, existsCostumer);
+      await OrderService.insert(reciveOrder.products_quantity, existsProduct, existsCostumer);
 
       await StockService.update(reciveOrder.product, newQuantity);
 
@@ -75,7 +75,7 @@ class OrderController {
       const productIsAvailabe = (getProductId[0].product.quantity);
 
       const addProductsOffDeletedOrder = Number(productIsAvailabe)
-      + Number(existsOrder.productsQuantity);
+      + Number(existsOrder.products_quantity);
 
       await OrderService.delete(orderID);
       await StockService.update(productId, addProductsOffDeletedOrder);

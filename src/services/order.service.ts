@@ -6,7 +6,7 @@ class OrderService {
     const createOrder = new Order();
     createOrder.costumer = existsCostumer;
     createOrder.product = existsProduct;
-    createOrder.productsQuantity = productsQuantity;
+    createOrder.products_quantity = productsQuantity;
 
     await getRepository(Order)
       .createQueryBuilder()
