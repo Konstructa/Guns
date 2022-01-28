@@ -1,6 +1,6 @@
 export interface IOrder {
     id?: string,
-    productsQuantity: number,
+    products_quantity: number,
     amount?: number;
     product: string,
     costumer: string
