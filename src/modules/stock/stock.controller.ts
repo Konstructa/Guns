@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
-import { StockService } from '../services/stock.service';
+import { getRepository } from 'typeorm';
+import { Product } from './Product';
+import { StockService } from './stock.service';
 
 class StockController {
   static async createProduct(req: Request, res: Response) {
@@ -42,13 +44,18 @@ class StockController {
         return res.status(400).json('Valor não pode ser negativo');
       }
 
-      // verifyid
+      const existProduct = await getRepository(Product)
+        .findOne(id);
+
+      if (!existProduct) {
+        return res.json('Produto não existe');
+      }
 
       await StockService.update(id, updateQuantityProduct);
 
       return res.status(200).json('Produto atualizado com sucesso');
     } catch (error) {
-      return res.status(500).json(error);
+      return res.status(500).json('Insira um valor valido');
     }
   }
 

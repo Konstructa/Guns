@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import { validate } from 'class-validator';
-import { Customer } from '../entities/Customer';
-import ICustomer from '../interface/customer';
+import { Customer } from './Customer';
+import ICustomer from './customer.interface';
 
 class CustomerService {
   static async insert({

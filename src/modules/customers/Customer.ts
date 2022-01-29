@@ -10,7 +10,7 @@ import {
   IsEmail, IsString, IsInt, Min,
 } from 'class-validator';
 
-@Entity('Costumers')
+@Entity('Customers')
 class Customer {
   @PrimaryGeneratedColumn('uuid')
     id: string;

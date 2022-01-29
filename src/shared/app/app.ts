@@ -7,9 +7,9 @@ import cors from 'cors';
 import createConnection from '../database/db';
 
 import IndexRoutes from '../routes/index.routes';
-import CostumerRoutes from '../routes/costumer.routes';
-import OrderRoutes from '../routes/orders.routes';
-import StockRoutes from '../routes/stock.routes';
+import CostumerRoutes from '../../modules/customers/costumer.routes';
+import OrderRoutes from '../../modules/orders/orders.routes';
+import StockRoutes from '../../modules/stock/stock.routes';
 import ErrorRoutes from '../routes/error.routes';
 
 export class App {

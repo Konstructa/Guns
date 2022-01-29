@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import { OrderService } from '../services/order.service';
-import { StockService } from '../services/stock.service';
-import { IOrder } from '../interface/order';
-import { Customer } from '../entities/Customer';
-import { Product } from '../entities/Product';
-import { Order } from '../entities/Order';
+import { OrderService } from './order.service';
+import { StockService } from '../stock/stock.service';
+import { IOrder } from './order.interface';
+import { Customer } from '../customers/Customer';
+import { Product } from '../stock/Product';
+import { Order } from './Order';
 
 class OrderController {
   static async createOrder(req: Request, res: Response) {
@@ -16,27 +16,33 @@ class OrderController {
         return res.status(400).json('Quantidade não pode ser 0');
       }
 
-      const existsProduct = await getRepository(Product)
-        .createQueryBuilder('navy.stock')
-        .where('id = :id', { id: reciveOrder.product })
-        .getOneOrFail();
+      const existProduct = await getRepository(Product)
+        .findOne(reciveOrder.product);
 
-      const existsCustomer = await getRepository(Customer)
-        .createQueryBuilder('navy.customers')
-        .where('id = :id', { id: reciveOrder.customer })
-        .getOneOrFail();
+      if (!existProduct) {
+        return res.json('Produto não existe');
+      }
 
-      const quantityInStock = Number(existsProduct?.quantity);
+      const existCustomer = await getRepository(Customer)
+        .findOne(reciveOrder.customer);
 
-      const quantityGems = existsCustomer.gems;
+      if (!existCustomer) {
+        return res.json('Error, Usuário não existe');
+      }
 
-      const amount = existsProduct.price * reciveOrder.products_quantity;
+      const quantityInStock = Number(existProduct?.quantity);
+
+      const quantityGems = existCustomer.gems;
+
+      const amount = existProduct.price * reciveOrder.products_quantity;
 
       let newQuantity = 0;
+      // let newSale = 0;
 
       if (reciveOrder.products_quantity <= quantityInStock
         || quantityGems <= amount) {
         newQuantity = quantityInStock - reciveOrder.products_quantity;
+        // newSale = existCustomer.gems - amount;
       } else {
         return res.status(400).json(
           {
@@ -48,8 +54,8 @@ class OrderController {
       await OrderService.insert(
         reciveOrder.products_quantity,
         amount,
-        existsProduct,
-        existsCustomer,
+        existProduct,
+        existCustomer,
       );
 
       await StockService.update(reciveOrder.product, newQuantity);
@@ -71,9 +77,11 @@ class OrderController {
       const orderID = req.params.id;
 
       const existsOrder = await getRepository(Order)
-        .createQueryBuilder('orders')
-        .where('id = :id', { orderID })
-        .getOneOrFail();
+        .findOne(orderID);
+
+      if (!existsOrder) {
+        return res.json('Error, pedido não existe');
+      }
 
       const getProductId = await getRepository(Order)
         .createQueryBuilder('orders')
@@ -90,9 +98,9 @@ class OrderController {
       await OrderService.delete(orderID);
       await StockService.update(productId, addProductsOffDeletedOrder);
 
-      res.status(202).json({ suscess: 'Pedido deletado' });
+      return res.status(202).json({ suscess: 'Pedido deletado' });
     } catch (error) {
-      res.status(500).json({ error: 'Erro interno' });
+      return res.status(500).json({ error: 'Erro interno' });
     }
   }
 
@@ -102,16 +110,18 @@ class OrderController {
 
       console.log(orderID);
 
-      await getRepository(Order)
-        .createQueryBuilder('orders')
-        .where('id = :id', { orderID })
-        .getOneOrFail();
+      const existsOrder = await getRepository(Order)
+        .findOne(orderID);
+
+      if (!existsOrder) {
+        return res.json('Error, pedido não existe');
+      }
 
       const result = await OrderService.findProduct(orderID);
 
-      res.status(302).json(result);
+      return res.status(302).json(result);
     } catch (error) {
-      res.status(400).json(error);
+      return res.status(400).json(error);
     }
   }
 
@@ -119,16 +129,18 @@ class OrderController {
     try {
       const orderID = req.params.id;
 
-      await getRepository(Order)
-        .createQueryBuilder('orders')
-        .where('id = :id', { orderID })
-        .getOneOrFail();
+      const existsOrder = await getRepository(Order)
+        .findOne(orderID);
+
+      if (!existsOrder) {
+        return res.json('Error, pedido não existe');
+      }
 
       const result = await OrderService.findCustomer(orderID);
 
-      res.status(302).json(result);
+      return res.status(302).json(result);
     } catch (error) {
-      res.status(400).json({ error: 'Insira um ID existente!' });
+      return res.status(400).json({ error: 'Insira um ID existente!' });
     }
   }
 }

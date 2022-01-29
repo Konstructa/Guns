@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { getRepository } from 'typeorm';
+import { Customer } from './Customer';
+import { CustomerService } from './customer.service';
 
-import { Costumer } from '../entities/Costumer';
-import { CostumerService } from '../services/costumer.service';
-
-class CostumerController {
-  static async createCostumer(req: Request, res: Response) {
+class CustomerController {
+  static async createCustomer(req: Request, res: Response) {
     try {
       const {
         name, username, email, password, gems,
@@ -21,7 +20,7 @@ class CostumerController {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const create = await CostumerService.insert({
+      const create = await CustomerService.insert({
         name, username, email, hashedPassword, gems,
       });
 
@@ -40,24 +39,25 @@ class CostumerController {
     }
   }
 
-  static async deleteCostumer(req: Request, res: Response) {
+  static async deleteCustomer(req: Request, res: Response) {
     try {
       const { id } = req.params;
 
-      await getRepository(Costumer)
-        .createQueryBuilder('navy.costumers')
-        .where('id = :id', { id })
-        .getOneOrFail();
+      const existCostumer = await getRepository(Customer)
+        .findOne(id);
 
-      await CostumerService.delete(id);
+      if (!existCostumer) {
+        return res.status(400).json('Error, Usuário não existe');
+      }
+      await CustomerService.delete(id);
 
-      res.status(202).json({ suscess: 'Usuário deletado com sucesso!' });
+      return res.status(202).json({ suscess: 'Usuário deletado com sucesso!' });
     } catch (error) {
-      res.status(404).json('ID não encontrado');
+      return res.status(404).json('ID não encontrado');
     }
   }
 
-  static async updateCostumer(req: Request, res: Response) {
+  static async updateCustomer(req: Request, res: Response) {
     try {
       const { id } = req.params;
       const {
@@ -65,14 +65,16 @@ class CostumerController {
       } = req.body;
       console.log(name, username, email, password, gems);
 
-      await getRepository(Costumer)
-        .createQueryBuilder('navy.costumers')
-        .where('id = :id', { id })
-        .getOneOrFail();
+      const existCostumer = await getRepository(Customer)
+        .findOne(id);
+
+      if (!existCostumer) {
+        return res.json('Error, Usuário não existe');
+      }
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const update = await CostumerService.update(id, {
+      const update = await CustomerService.update(id, {
         name, username, email, hashedPassword, gems,
       });
 
@@ -89,4 +91,4 @@ class CostumerController {
   }
 }
 
-export { CostumerController };
+export { CustomerController };

@@ -1,12 +1,21 @@
 import { getRepository } from 'typeorm';
-import { Order } from '../entities/Order';
+import { Customer } from '../customers/Customer';
+import { Order } from './Order';
+import { Product } from '../stock/Product';
 
 class OrderService {
-  static async insert(productsQuantity: number, existsProduct: any, existsCostumer: any) {
-    const createOrder = new Order();
-    createOrder.costumer = existsCostumer;
-    createOrder.product = existsProduct;
-    createOrder.products_quantity = productsQuantity;
+  static async insert(
+    productsQuantity: number,
+    value: number,
+    existsProduct: Product,
+    existsCustomer: Customer,
+  ) {
+    const createOrder = getRepository(Order).create({
+      products_quantity: productsQuantity,
+      value,
+      product: existsProduct,
+      customer: existsCustomer,
+    });
 
     await getRepository(Order)
       .createQueryBuilder()
@@ -25,13 +34,15 @@ class OrderService {
       .execute();
   }
 
-  static async findCostumer(id: string) {
+  static async findCustomer(id: string) {
     const getCostumerDetailsById = await getRepository(Order)
       .createQueryBuilder('orders')
-      .relation(Order, 'costumer')
+      .relation(Order, 'customer')
       .of(id)
       .loadOne();
 
+    console.log(id);
+    console.log(getCostumerDetailsById);
     return getCostumerDetailsById;
   }
 
@@ -40,8 +51,10 @@ class OrderService {
       .createQueryBuilder('orders')
       .relation(Order, 'product')
       .of(id)
-      .loadOne();
+      .loadMany();
 
+    console.log(id);
+    console.log(getProductDetailsById);
     return getProductDetailsById;
   }
 }
