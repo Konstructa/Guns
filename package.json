@@ -34,7 +34,7 @@
   },
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "dev": "nodemon src/server.ts --exec ts-node",
+    "dev": "nodemon src/shared/http/server.ts --exec ts-node",
     "start": "node dist/server.js",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js"
   },
