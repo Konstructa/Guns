@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 import { OrderService } from '../services/order.service';
 import { StockService } from '../services/stock.service';
 import { IOrder } from '../interface/order';
-import { Costumer } from '../entities/Costumer';
+import { Customer } from '../entities/Customer';
 import { Product } from '../entities/Product';
 import { Order } from '../entities/Order';
 
@@ -21,26 +21,36 @@ class OrderController {
         .where('id = :id', { id: reciveOrder.product })
         .getOneOrFail();
 
-      const existsCostumer = await getRepository(Costumer)
-        .createQueryBuilder('navy.costumers')
-        .where('id = :id', { id: reciveOrder.costumer })
+      const existsCustomer = await getRepository(Customer)
+        .createQueryBuilder('navy.customers')
+        .where('id = :id', { id: reciveOrder.customer })
         .getOneOrFail();
 
       const quantityInStock = Number(existsProduct?.quantity);
 
+      const quantityGems = existsCustomer.gems;
+
+      const amount = existsProduct.price * reciveOrder.products_quantity;
+
       let newQuantity = 0;
 
-      if (reciveOrder.products_quantity <= quantityInStock) {
+      if (reciveOrder.products_quantity <= quantityInStock
+        || quantityGems <= amount) {
         newQuantity = quantityInStock - reciveOrder.products_quantity;
       } else {
         return res.status(400).json(
           {
-            error: 'Quantidade de produtos é superior ao que temos no estoque',
+            error: 'Quantidade de produtos é superior ao que temos no estoque, ou vc n',
           },
         );
       }
 
-      await OrderService.insert(reciveOrder.products_quantity, existsProduct, existsCostumer);
+      await OrderService.insert(
+        reciveOrder.products_quantity,
+        amount,
+        existsProduct,
+        existsCustomer,
+      );
 
       await StockService.update(reciveOrder.product, newQuantity);
 
@@ -50,7 +60,7 @@ class OrderController {
         },
       );
     } catch (error) {
-      res.status(400).json('Erros encontrados no pedido');
+      res.status(400).json(error);
     }
 
     return res.status(201);
@@ -90,6 +100,8 @@ class OrderController {
     try {
       const orderID = req.params.id;
 
+      console.log(orderID);
+
       await getRepository(Order)
         .createQueryBuilder('orders')
         .where('id = :id', { orderID })
@@ -99,7 +111,7 @@ class OrderController {
 
       res.status(302).json(result);
     } catch (error) {
-      res.status(400).json({ error: 'Insira um ID válido!' });
+      res.status(400).json(error);
     }
   }
 
@@ -107,14 +119,12 @@ class OrderController {
     try {
       const orderID = req.params.id;
 
-      const id = Number.parseInt(orderID, 10);
-
       await getRepository(Order)
         .createQueryBuilder('orders')
-        .where('id = :id', { id })
+        .where('id = :id', { orderID })
         .getOneOrFail();
 
-      const result = await OrderService.findCostumer(orderID);
+      const result = await OrderService.findCustomer(orderID);
 
       res.status(302).json(result);
     } catch (error) {

@@ -1,7 +1,7 @@
 export interface IOrder {
     id?: string,
     products_quantity: number,
-    amount?: number;
+    value?: number;
     product: string,
-    costumer: string
+    customer: string
 }

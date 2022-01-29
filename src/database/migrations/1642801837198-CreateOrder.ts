@@ -28,12 +28,12 @@ export class CreateOrder1642801837198 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'costumer_id',
+            name: 'customerId',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'product_id',
+            name: 'productId',
             type: 'varchar',
             isNullable: false,
           },
@@ -46,13 +46,13 @@ export class CreateOrder1642801837198 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'FK_CostumerOrder',
-            columnNames: ['costumer_id'],
-            referencedTableName: 'Costumers',
+            columnNames: ['customerId'],
+            referencedTableName: 'Customers',
             referencedColumnNames: ['id'],
           },
           {
             name: 'FK_ProductOrder',
-            columnNames: ['product_id'],
+            columnNames: ['productId'],
             referencedTableName: 'Stock',
             referencedColumnNames: ['id'],
           },
