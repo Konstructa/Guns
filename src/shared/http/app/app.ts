@@ -4,13 +4,9 @@ import 'dotenv/config';
 import * as bodyParser from 'body-parser';
 import morgan from 'morgan';
 import cors from 'cors';
-import createConnection from '../database/db';
+import createConnection from '../../typeorm/database/db';
 
 import IndexRoutes from '../routes/index.routes';
-import CostumerRoutes from '../../modules/customers/costumer.routes';
-import OrderRoutes from '../../modules/orders/orders.routes';
-import StockRoutes from '../../modules/stock/stock.routes';
-import ErrorRoutes from '../routes/error.routes';
 
 export class App {
   private app : Application;
@@ -43,14 +39,10 @@ export class App {
 
   routes() {
     this.app.use(IndexRoutes);
-    this.app.use('/costumer', CostumerRoutes);
-    this.app.use('/order', OrderRoutes);
-    this.app.use('/stock', StockRoutes);
-    this.app.use(ErrorRoutes);
   }
 
   async listen() {
-    await this.app.listen(this.app.get('port'));
+    this.app.listen(this.app.get('port'));
     console.log('Server on port', this.app.get('port'));
   }
 }

@@ -1,4 +1,4 @@
-import { App } from './shared/app/app';
+import { App } from './app/app';
 
 async function main() {
   const app = new App();
