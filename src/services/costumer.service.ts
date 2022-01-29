@@ -1,13 +1,13 @@
 import { getRepository } from 'typeorm';
 import { validate } from 'class-validator';
-import { Costumer } from '../entities/Costumer';
-import ICostumer from '../interface/custumer';
+import { Customer } from '../entities/Customer';
+import ICustomer from '../interface/customer';
 
-class CostumerService {
+class CustomerService {
   static async insert({
     name, username, email, hashedPassword, gems,
-  }: ICostumer) {
-    const teste = getRepository(Costumer).create({
+  }: ICustomer) {
+    const teste = getRepository(Customer).create({
       name,
       username,
       email,
@@ -17,10 +17,10 @@ class CostumerService {
     const error = await validate(teste);
 
     if (error.length === 0) {
-      await getRepository(Costumer)
+      await getRepository(Customer)
         .createQueryBuilder()
         .insert()
-        .into(Costumer)
+        .into(Customer)
         .values(
           {
             name,
@@ -38,26 +38,39 @@ class CostumerService {
 
   static async update(id: string, {
     name, username, email, hashedPassword, gems,
-  }: ICostumer) {
-    const aswer = await getRepository(Costumer)
-      .createQueryBuilder()
-      .update(Costumer)
-      .set({
-        name, username, email, password: hashedPassword, gems,
-      })
-      .where('id = :id', { id })
-      .execute();
-    console.log(aswer);
+  }: ICustomer) {
+    const teste = getRepository(Customer).create({
+      name,
+      username,
+      email,
+      password: hashedPassword,
+      gems,
+    });
+    const error = await validate(teste);
+
+    if (error.length === 0) {
+      const aswer = await getRepository(Customer)
+        .createQueryBuilder()
+        .update(Customer)
+        .set({
+          name, username, email, password: hashedPassword, gems,
+        })
+        .where('id = :id', { id })
+        .execute();
+      console.log(aswer);
+    }
+
+    return error;
   }
 
   static async delete(id: string) {
-    await getRepository(Costumer)
+    await getRepository(Customer)
       .createQueryBuilder()
       .delete()
-      .from(Costumer)
+      .from(Customer)
       .where('id = :id', { id })
       .execute();
   }
 }
 
-export { CostumerService };
+export { CustomerService };

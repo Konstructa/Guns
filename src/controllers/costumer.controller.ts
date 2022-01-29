@@ -65,19 +65,24 @@ class CostumerController {
       } = req.body;
       console.log(name, username, email, password, gems);
 
-      const nedd = await getRepository(Costumer)
+      await getRepository(Costumer)
         .createQueryBuilder('navy.costumers')
         .where('id = :id', { id })
         .getOneOrFail();
-      console.log(nedd);
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      await CostumerService.update(id, {
+      const update = await CostumerService.update(id, {
         name, username, email, hashedPassword, gems,
       });
 
-      return res.status(200).json({ sucess: 'Dados atualizados com sucesso' });
+      if (update.length === 0) {
+        return res.status(200).json({ sucess: 'Dados atualizados com sucesso' });
+      }
+
+      const result = update.map((e) => e.constraints);
+
+      return res.status(406).json({ error: result });
     } catch (error) {
       return res.status(406).json(error);
     }

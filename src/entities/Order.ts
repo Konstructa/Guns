@@ -7,7 +7,7 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 import { IsInt } from 'class-validator';
-import { Costumer } from './Costumer';
+import { Customer } from './Customer';
 import { Product } from './Product';
 
 @Entity('Orders')
@@ -20,15 +20,15 @@ class Order {
       products_quantity: number;
 
     @Column()
-      amount: number;
+      value: number;
 
     @OneToOne(() => Product)
     @JoinColumn()
       product: Product;
 
-    @OneToOne(() => Costumer, { onDelete: 'CASCADE' })
+    @OneToOne(() => Customer, { onDelete: 'CASCADE' })
     @JoinColumn()
-      costumer: Costumer;
+      customer: Customer;
 
     @CreateDateColumn()
       created_at: Date;
