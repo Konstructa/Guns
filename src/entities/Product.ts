@@ -10,16 +10,19 @@ class Product {
   @PrimaryGeneratedColumn('uuid')
     id: string;
 
+  @Column()
   @IsString({ message: 'O nome precisa ser uma string' })
     name: string;
 
   @Column()
     description:string;
 
+  @Column()
   @IsInt({ message: 'O valor é dado em numeros inteiros!' })
     price: number;
 
-  @IsInt()
+  @Column()
+  @IsInt({ message: 'O valor é dado em numeros inteiros!' })
     quantity: number;
 }
 
