@@ -47,6 +47,7 @@ class CustomerService {
       gems,
     });
     const error = await validate(teste);
+    console.log(error);
 
     if (error.length === 0) {
       const aswer = await getRepository(Customer)
@@ -61,6 +62,17 @@ class CustomerService {
     }
 
     return error;
+  }
+
+  static async updateGems(id: string, gems: number) {
+    await getRepository(Customer)
+      .createQueryBuilder()
+      .update(Customer)
+      .set({
+        gems,
+      })
+      .where('id = :id', { id })
+      .execute();
   }
 
   static async delete(id: string) {
