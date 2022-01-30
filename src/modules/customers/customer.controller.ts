@@ -46,6 +46,7 @@ class CustomerController {
       const existCostumer = await getRepository(Customer)
         .findOne(id);
 
+      console.log(id);
       if (!existCostumer) {
         return res.status(400).json('Error, Usuário não existe');
       }
@@ -53,7 +54,7 @@ class CustomerController {
 
       return res.status(202).json({ suscess: 'Usuário deletado com sucesso!' });
     } catch (error) {
-      return res.status(404).json('ID não encontrado');
+      return res.status(404).json(error);
     }
   }
 
@@ -63,7 +64,6 @@ class CustomerController {
       const {
         name, username, email, password, gems,
       } = req.body;
-      console.log(name, username, email, password, gems);
 
       const existCostumer = await getRepository(Customer)
         .findOne(id);
