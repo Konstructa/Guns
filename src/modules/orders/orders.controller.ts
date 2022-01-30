@@ -6,6 +6,7 @@ import { IOrder } from './order.interface';
 import { Customer } from '../customers/Customer';
 import { Product } from '../stock/Product';
 import { Order } from './Order';
+import { CustomerService } from '../customers/customer.service';
 
 class OrderController {
   static async createOrder(req: Request, res: Response) {
@@ -37,12 +38,12 @@ class OrderController {
       const amount = existProduct.price * reciveOrder.products_quantity;
 
       let newQuantity = 0;
-      // let newSale = 0;
+      let newSale = 0;
 
       if (reciveOrder.products_quantity <= quantityInStock
         || quantityGems <= amount) {
         newQuantity = quantityInStock - reciveOrder.products_quantity;
-        // newSale = existCustomer.gems - amount;
+        newSale = existCustomer.gems - amount;
       } else {
         return res.status(400).json(
           {
@@ -59,6 +60,8 @@ class OrderController {
       );
 
       await StockService.update(reciveOrder.product, newQuantity);
+
+      await CustomerService.updateGems(existCustomer.id, newSale);
 
       return res.status(201).json(
         {
@@ -83,24 +86,36 @@ class OrderController {
         return res.json('Error, pedido não existe');
       }
 
-      const getProductId = await getRepository(Order)
-        .createQueryBuilder('orders')
-        .leftJoinAndSelect('orders.product', 'product')
-        .getMany();
+      const existsCustomer = await getRepository(Customer)
+        .createQueryBuilder('navy.stock')
+        .relation(Order, 'customer')
+        .of(orderID)
+        .loadOne();
 
-      const productId = getProductId[0].product.id;
+      const existsProduct = await getRepository(Product)
+        .createQueryBuilder('navy.stock')
+        .relation(Order, 'product')
+        .of(orderID)
+        .loadOne();
 
-      const productIsAvailabe = (getProductId[0].product.quantity);
+      const productId = existsProduct.id;
+
+      const productIsAvailabe = (existsProduct.quantity);
 
       const addProductsOffDeletedOrder = Number(productIsAvailabe)
       + Number(existsOrder.products_quantity);
 
+      const customerId = existsCustomer.id;
+
+      const refundGems = existsCustomer.gems + existsOrder.value;
+
       await OrderService.delete(orderID);
       await StockService.update(productId, addProductsOffDeletedOrder);
+      await CustomerService.updateGems(customerId, refundGems);
 
       return res.status(202).json({ suscess: 'Pedido deletado' });
     } catch (error) {
-      return res.status(500).json({ error: 'Erro interno' });
+      return res.status(500).json(error);
     }
   }
 
