@@ -41,8 +41,6 @@ class OrderService {
       .of(id)
       .loadOne();
 
-    console.log(id);
-    console.log(getCostumerDetailsById);
     return getCostumerDetailsById;
   }
 
@@ -53,8 +51,6 @@ class OrderService {
       .of(id)
       .loadMany();
 
-    console.log(id);
-    console.log(getProductDetailsById);
     return getProductDetailsById;
   }
 }
