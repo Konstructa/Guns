@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import { Product } from './Product';
-import { StockService } from './stock.service';
+import { Product } from '../domain/Product';
+import { StockService } from '../infra/persistence/stock.service';
 
 class StockController {
   static async createProduct(req: Request, res: Response) {

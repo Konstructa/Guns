@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import { Customer } from '../../../customers/domain/Customer';
 import { Order } from '../../domain/Order';
-import { Product } from '../../../stock/Product';
+import { Product } from '../../../stock/domain/Product';
 
 class OrderService {
   static async insert(

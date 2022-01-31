@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { IsInt } from 'class-validator';
 import { Customer } from '../../customers/domain/Customer';
-import { Product } from '../../stock/Product';
+import { Product } from '../../stock/domain/Product';
 
 @Entity('Orders')
 class Order {

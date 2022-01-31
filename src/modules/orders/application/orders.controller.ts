@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { OrderService } from '../infra/persistence/order.service';
-import { StockService } from '../../stock/stock.service';
+import { StockService } from '../../stock/infra/persistence/stock.service';
 import { IOrder } from '../domain/order.interface';
 import { Customer } from '../../customers/domain/Customer';
-import { Product } from '../../stock/Product';
+import { Product } from '../../stock/domain/Product';
 import { Order } from '../domain/Order';
 import { CustomerService } from '../../customers/infra/persistence/customer.service';
 
