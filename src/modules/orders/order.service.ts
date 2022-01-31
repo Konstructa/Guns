@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { Customer } from '../customers/Customer';
+import { Customer } from '../customers/domain/Customer';
 import { Order } from './Order';
 import { Product } from '../stock/Product';
 

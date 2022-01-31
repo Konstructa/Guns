@@ -7,7 +7,7 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 import { IsInt } from 'class-validator';
-import { Customer } from '../customers/Customer';
+import { Customer } from '../customers/domain/Customer';
 import { Product } from '../stock/Product';
 
 @Entity('Orders')

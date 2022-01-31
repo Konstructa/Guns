@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { getRepository } from 'typeorm';
-import { Customer } from './Customer';
-import { CustomerService } from './customer.service';
+import { Customer } from '../domain/Customer';
+import { CustomerService } from '../infra/persistence/customer.service';
 
 class CustomerController {
   static async createCustomer(req: Request, res: Response) {

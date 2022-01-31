@@ -3,10 +3,10 @@ import { getRepository } from 'typeorm';
 import { OrderService } from './order.service';
 import { StockService } from '../stock/stock.service';
 import { IOrder } from './order.interface';
-import { Customer } from '../customers/Customer';
+import { Customer } from '../customers/domain/Customer';
 import { Product } from '../stock/Product';
 import { Order } from './Order';
-import { CustomerService } from '../customers/customer.service';
+import { CustomerService } from '../customers/infra/persistence/customer.service';
 
 class OrderController {
   static async createOrder(req: Request, res: Response) {
