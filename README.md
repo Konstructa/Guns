@@ -46,24 +46,30 @@ order/productDetailsByOrderID/{id}
 costumer/
 
 ```
-}
-    "user": 
-    "password": 
+{
+    "name": "Teste",
+    "username":"sasas",
+    "email": "mariagata@gmail.com",
+    "password": "123213",
+    "gems": 1213
 } 
 ```
 
 stock/
 ```
+{
+    "name": "Olho de Agamotto",
+    "description": "Revela ilusoes, dispensando magia, e gera rajadas de energias de grande força",
+    "price": 1200,
+    "quantity": 100
 }
-    "name": 
-    "quantity": 
-} 
+
 ```
 
 order/
 ```
 }
-    "productsQuantity": 
+    "products_quantity": 
     "product": (id)
     "costumer": (id)
 } 
@@ -89,8 +95,11 @@ costumer/{id}
 costumer/{id}
 ```
 {
-    "user": 
-    "password": 
+    "name": "Teste",
+    "username":"sasas",
+    "email": "mariagata@gmail.com",
+    "password": "123",
+    "gems": 1032000
 }
 
 ```
@@ -110,7 +119,10 @@ Se uma order for criada, seus produtos devem ser subtraídos do estoque
 
 Caso sua conta seja deletado o pedido é dado concluído e deletado junto
 
-Caso apenas seu pedido seja deletado, o produto volta para o estoque
+Caso apenas seu pedido seja deletado, o produto volta para o estoque e você sera reembolsado
+
+Caso você não tenha gemas suficientes o pedido não será concluído
+
 
 ## :hammer: Instalação
 
