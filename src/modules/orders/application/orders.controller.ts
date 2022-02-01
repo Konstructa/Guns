@@ -86,17 +86,9 @@ class OrderController {
         return res.json('Error, pedido não existe');
       }
 
-      const existsCustomer = await getRepository(Customer)
-        .createQueryBuilder('navy.stock')
-        .relation(Order, 'customer')
-        .of(orderID)
-        .loadOne();
+      const existsCustomer: Customer = await OrderService.findCustomer(orderID);
 
-      const existsProduct = await getRepository(Product)
-        .createQueryBuilder('navy.stock')
-        .relation(Order, 'product')
-        .of(orderID)
-        .loadOne();
+      const existsProduct: Product = await OrderService.findProduct(orderID);
 
       const productId = existsProduct.id;
 
