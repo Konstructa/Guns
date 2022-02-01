@@ -44,7 +44,7 @@ class StockService {
   }
 
   static async getAll() {
-    const allProducts = await getRepository(Product)
+    const allProducts: Product[] = await getRepository(Product)
       .createQueryBuilder()
       .getMany();
 
