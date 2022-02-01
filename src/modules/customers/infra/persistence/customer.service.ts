@@ -83,6 +83,15 @@ class CustomerService {
       .where('id = :id', { id })
       .execute();
   }
+
+  static async find(username: string) {
+    const search: Customer | undefined = await getRepository(Customer)
+      .createQueryBuilder()
+      .where('username = :username', { username })
+      .getOne();
+
+    return search;
+  }
 }
 
 export { CustomerService };
