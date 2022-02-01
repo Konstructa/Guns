@@ -44,12 +44,12 @@ class OrderService {
     return getCostumerDetailsById;
   }
 
-  static async findProduct(id: string) {
+  static async findProduct(id: string): Promise<Product> {
     const getProductDetailsById = await getRepository(Order)
       .createQueryBuilder('orders')
       .relation(Order, 'product')
       .of(id)
-      .loadMany();
+      .loadOne();
 
     return getProductDetailsById;
   }
