@@ -17,14 +17,14 @@ class OrderController {
         return res.status(400).json('Quantidade não pode ser 0');
       }
 
-      const existProduct = await getRepository(Product)
+      const existProduct: Product| undefined = await getRepository(Product)
         .findOne(reciveOrder.product);
 
       if (!existProduct) {
         return res.json('Produto não existe');
       }
 
-      const existCustomer = await getRepository(Customer)
+      const existCustomer: Customer | undefined = await getRepository(Customer)
         .findOne(reciveOrder.customer);
 
       if (!existCustomer) {
@@ -79,7 +79,7 @@ class OrderController {
     try {
       const orderID = req.params.id;
 
-      const existsOrder = await getRepository(Order)
+      const existsOrder: Order | undefined = await getRepository(Order)
         .findOne(orderID);
 
       if (!existsOrder) {
@@ -117,14 +117,14 @@ class OrderController {
 
       console.log(orderID);
 
-      const existsOrder = await getRepository(Order)
+      const existsOrder: Order | undefined = await getRepository(Order)
         .findOne(orderID);
 
       if (!existsOrder) {
         return res.json('Error, pedido não existe');
       }
 
-      const result = await OrderService.findProduct(orderID);
+      const result: Product = await OrderService.findProduct(orderID);
 
       return res.status(302).json(result);
     } catch (error) {
@@ -136,7 +136,7 @@ class OrderController {
     try {
       const orderID = req.params.id;
 
-      const existsOrder = await getRepository(Order)
+      const existsOrder: Order | undefined = await getRepository(Order)
         .findOne(orderID);
 
       if (!existsOrder) {

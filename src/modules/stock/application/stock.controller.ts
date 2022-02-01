@@ -38,13 +38,13 @@ class StockController {
   static async updateProduct(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const updateQuantityProduct = Number(req.body.quantity);
+      const updateQuantityProduct: number = Number(req.body.quantity);
 
       if (updateQuantityProduct < 0) {
         return res.status(400).json('Valor não pode ser negativo');
       }
 
-      const existProduct = await getRepository(Product)
+      const existProduct: Product | undefined = await getRepository(Product)
         .findOne(id);
 
       if (!existProduct) {
@@ -61,7 +61,7 @@ class StockController {
 
   static async getAllProducts(req: Request, res: Response) {
     try {
-      const AllProducts = await StockService.getAll();
+      const AllProducts: Product[] = await StockService.getAll();
       res.status(302).json(AllProducts);
     } catch (error) {
       res.status(500).json({ error: 'Servidor não está funcionando' });

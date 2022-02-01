@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { getRepository } from 'typeorm';
+import { ValidationError } from 'class-validator';
 import { Customer } from '../domain/Customer';
 import { CustomerService } from '../infra/persistence/customer.service';
 
@@ -20,7 +21,7 @@ class CustomerController {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const create = await CustomerService.insert({
+      const create: ValidationError[] = await CustomerService.insert({
         name, username, email, hashedPassword, gems,
       });
 
@@ -43,7 +44,7 @@ class CustomerController {
     try {
       const { id } = req.params;
 
-      const existCostumer = await getRepository(Customer)
+      const existCostumer: Customer | undefined = await getRepository(Customer)
         .findOne(id);
 
       console.log(id);
@@ -65,7 +66,7 @@ class CustomerController {
         name, username, email, password, gems,
       } = req.body;
 
-      const existCostumer = await getRepository(Customer)
+      const existCostumer: Customer | undefined = await getRepository(Customer)
         .findOne(id);
 
       if (!existCostumer) {
@@ -74,7 +75,7 @@ class CustomerController {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const update = await CustomerService.update(id, {
+      const update: ValidationError[] = await CustomerService.update(id, {
         name, username, email, hashedPassword, gems,
       });
 
