@@ -6,7 +6,7 @@ import ErrorRoutes from './error.routes';
 
 const router = Router();
 
-router.use('/costumer', CostumerRoutes);
+router.use('/customer', CostumerRoutes);
 router.use('/order', OrderRoutes);
 router.use('/stock', StockRoutes);
 router.use(ErrorRoutes);
