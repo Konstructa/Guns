@@ -29,21 +29,23 @@
 
 - Bcrypt
 
+- JWT
+
 ## :computer: Projeto
 
 Com a Torre dos Vingadores vazia após o BLIP, diversas armas secretas e únicas, como o escudo do Capitão América e o Cetro de Loki, foram encontradas e você pode adquirir uma aqui!
 
 **GET**
 
-stock/
+- stock/
 
-order/customerByOrderID/{id}
+- order/customerByOrderID/{id}
 
-order/productDetailsByOrderID/{id}
+- order/productDetailsByOrderID/{id}
 
 **POST**
 
-costumer/
+- costumer/
 
 ```
 {
@@ -55,7 +57,7 @@ costumer/
 } 
 ```
 
-stock/
+- stock/
 ```
 {
     "name": "Olho de Agamotto",
@@ -66,7 +68,7 @@ stock/
 
 ```
 
-order/
+- order/
 ```
 }
     "products_quantity": 
@@ -77,13 +79,13 @@ order/
 
 **DELETE**
 
-order/{id}
+- order/{id}
 
-costumer/{id}
+- costumer/{id}
 
 **PATCH**
 
-/stock/{id}
+- /stock/{id}
 ```
 {   
     "quantity": 
@@ -92,7 +94,7 @@ costumer/{id}
 
 **PUT**
 
-costumer/{id}
+- customer/{id}
 ```
 {
     "name": "Teste",
