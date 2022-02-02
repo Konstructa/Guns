@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import bcryptjs from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { CustomerService } from '../infra/persistence/customer.service';
 
 class TokenController {
@@ -22,7 +23,13 @@ class TokenController {
       return res.status(404).json({ error: 'Senha incorreta' });
     }
 
-    return res.json('Ok');
+    const { id } = customer;
+
+    const token = jwt.sign({ id, username }, process.env.TOKEN_SECRET as string, {
+      expiresIn: process.env.TOKEN_EXPIRATION,
+    });
+
+    return res.json(token);
   }
 }
 
