@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { OrderController } from '../../application/orders.controller';
+import middleware from '../../../../shared/http/utils/middleware';
 
 const router = Router();
 
@@ -10,7 +11,7 @@ router.route('/:id')
   .delete(OrderController.deleteOneOrder);
 
 router.route('/customerByOrderID/:id')
-  .get(OrderController.getCustomerByOrderID);
+  .get(middleware, OrderController.getCustomerByOrderID);
 
 router.route('/productDetailsByOrderID/:id')
   .get(OrderController.getProductDetailsByOrderID);
