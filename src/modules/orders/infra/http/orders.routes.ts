@@ -1,19 +1,19 @@
 import { Router } from 'express';
 import { OrderController } from '../../application/orders.controller';
-import middleware from '../../../../shared/http/utils/middleware';
+import verifyToken from '../../../../shared/auth/middleware';
 
 const router = Router();
 
 router.route('/')
-  .post(middleware, OrderController.createOrder);
+  .post(verifyToken, OrderController.createOrder);
 
 router.route('/:id')
-  .delete(middleware, OrderController.deleteOneOrder);
+  .delete(verifyToken, OrderController.deleteOneOrder);
 
 router.route('/customerByOrderID/:id')
-  .get(middleware, OrderController.getCustomerByOrderID);
+  .get(verifyToken, OrderController.getCustomerByOrderID);
 
 router.route('/productDetailsByOrderID/:id')
-  .get(middleware, OrderController.getProductDetailsByOrderID);
+  .get(verifyToken, OrderController.getProductDetailsByOrderID);
 
 export default router;

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { CustomerController } from '../../application/customer.controller';
-import { TokenController } from '../../application/login/login.controller';
+import { TokenController } from '../../application/auth/login.controller';
 
 const router = Router();
 

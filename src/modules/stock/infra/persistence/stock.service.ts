@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import { validate } from 'class-validator';
 import { Product } from '../../domain/Product';
-import { IProduct } from '../../application/product.interface';
+import { IProduct } from '../../application/dto/product.interface';
 
 class StockService {
   static async insert({
