@@ -12,10 +12,7 @@ export default (req:Request, res: Response, next: NextFunction) => {
   const [, token] = authorization.split(' ');
 
   try {
-    const data = jwt.verify(token, process.env.TOKEN_SECRET || '') as JwtPayload;
-    /* const { username, password } = data;
-     req.username = username;
-    req.userpassword = password; */
+    jwt.verify(token, process.env.TOKEN_SECRET || '') as JwtPayload;
     return next();
   } catch (error) {
     return res.status(401).json({ error: 'Token expirado ou invalido' });
