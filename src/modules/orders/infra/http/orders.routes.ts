@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { OrderController } from '../../application/orders.controller';
-import verifyToken from '../../../../shared/auth/middleware';
+import verifyToken from '../../../auth/middleware/jwt-auth';
 
 const router = Router();
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcryptjs from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { CustomerService } from '../../modules/customers/infra/persistence/customer.service';
+import { CustomerService } from '../customers/infra/persistence/customer.service';
 
 class TokenController {
   static async store(req: Request, res: Response) {
