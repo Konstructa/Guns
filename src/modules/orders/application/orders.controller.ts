@@ -61,7 +61,7 @@ class OrderController {
 
       await StockService.update(reciveOrder.product, newQuantity);
 
-      await CustomerService.updateGems(existCustomer.id, newSale);
+     // await CustomerService.updateGems(existCustomer.id, newSale);
 
       return res.status(201).json(
         {
@@ -103,7 +103,7 @@ class OrderController {
 
       await OrderService.delete(orderID);
       await StockService.update(productId, addProductsOffDeletedOrder);
-      await CustomerService.updateGems(customerId, refundGems);
+      //await CustomerService.updateGems(customerId, refundGems);
 
       return res.status(202).json({ suscess: 'Pedido deletado' });
     } catch (error) {

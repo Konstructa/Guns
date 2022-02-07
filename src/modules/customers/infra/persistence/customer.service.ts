@@ -1,70 +1,56 @@
-import { getRepository } from 'typeorm';
-import { validate } from 'class-validator';
+import { getRepository, Repository } from 'typeorm';
+import { validate, ValidationError } from 'class-validator';
 import { Customer } from '../../domain/Customer';
-import ICustomer from '../../application/dto/customer.interface';
+import { CreateCustomerParams } from '../../application/dto/customer.interface';
+import { ICustomerService } from './protocol/ICustomerService';
 
-class CustomerService {
-  static async insert({
-    name, username, email, hashedPassword, gems,
-  }: ICustomer) {
-    const teste = getRepository(Customer).create({
-      name,
-      username,
-      email,
-      password: hashedPassword,
-      gems,
-    });
-    const error = await validate(teste);
-
-    if (error.length === 0) {
-      await getRepository(Customer)
-        .createQueryBuilder()
-        .insert()
-        .into(Customer)
-        .values(
-          {
-            name,
-            username,
-            email,
-            password: hashedPassword,
-            gems,
-          },
-        )
-        .execute();
-    }
-
-    return error;
+export class CustomerService {
+  constructor(
+    private customerRepository: ICustomerService,
+  ) {
   }
 
-  static async update(id: string, {
-    name, username, email, hashedPassword, gems,
-  }: ICustomer) {
-    const teste = getRepository(Customer).create({
+  async insert(data: CreateCustomerParams) {
+    /*  const teste = this.customerRepository.create(
+      data,
+    );
+    const error = await validate(teste);
+
+    if (error.length === 0) { */
+    this.customerRepository.insert(data);
+  }
+
+  // return error;
+
+  async update(id: string, {
+    name, username, email, password, gems,
+  }: CreateCustomerParams): Promise<void> {
+    /*     const teste = getRepository(Customer).create({
       name,
       username,
       email,
-      password: hashedPassword,
+      password,
       gems,
     });
     const error = await validate(teste);
     console.log(error);
+ */
+    /* if (error.length === 0) { */
+    const aswer = await getRepository(Customer)
+      .createQueryBuilder()
+      .update(Customer)
+      .set({
+        name, username, email, password, gems,
+      })
+      .where('id = :id', { id })
+      .execute();
+    console.log(aswer);
+    /* }
 
-    if (error.length === 0) {
-      const aswer = await getRepository(Customer)
-        .createQueryBuilder()
-        .update(Customer)
-        .set({
-          name, username, email, password: hashedPassword, gems,
-        })
-        .where('id = :id', { id })
-        .execute();
-      console.log(aswer);
-    }
-
-    return error;
+    return error; */
   }
 
-  static async updateGems(id: string, gems: number) {
+  /* async updateGems(id: string, gems: number) {
     await getRepository(Customer)
       .createQueryBuilder()
       .update(Customer)
@@ -73,9 +59,9 @@ class CustomerService {
       })
       .where('id = :id', { id })
       .execute();
-  }
+  } */
 
-  static async delete(id: string) {
+  async delete(id: string) {
     await getRepository(Customer)
       .createQueryBuilder()
       .delete()
@@ -84,14 +70,12 @@ class CustomerService {
       .execute();
   }
 
-  static async find(username: string) {
+  /*  async find(username: string) {
     const search: Customer | undefined = await getRepository(Customer)
       .createQueryBuilder()
       .where('username = :username', { username })
       .getOne();
 
     return search;
-  }
+  }  */
 }
-
-export { CustomerService };

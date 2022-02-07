@@ -1,10 +1,3 @@
- interface ICustomer {
-    id?: string,
-    name: string,
-    username: string,
-    email:string,
-    hashedPassword: string,
-    gems: number,
-}
+import { Customer } from '../../domain/Customer';
 
-export default ICustomer;
+export type CreateCustomerParams = Omit<Customer, 'id' | 'created_at' | 'update_at'>;
