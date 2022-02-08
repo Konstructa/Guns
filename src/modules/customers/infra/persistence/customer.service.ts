@@ -1,30 +1,28 @@
 import { getRepository, Repository } from 'typeorm';
 import { validate, ValidationError } from 'class-validator';
 import { Customer } from '../../domain/Customer';
-import { CreateCustomerParams } from '../../application/dto/customer.interface';
+import { CreateCustomerInterface, CreateCustomerParams } from '../../application/dto/customer.interface';
 import { ICustomerService } from './protocol/ICustomerService';
+import { IService } from './protocol/IServiceProtocol';
+import CustomerRepositoryCreate from '../../domain/customerRepository';
 
-export class CustomerService {
+export class CustomerService implements IService {
+  private customerRepository: ICustomerService;
+
   constructor(
-    private customerRepository: ICustomerService,
+    customerRepository: ICustomerService,
   ) {
+    this.customerRepository = customerRepository;
   }
 
-  async insert(data: CreateCustomerParams) {
-    /*  const teste = this.customerRepository.create(
-      data,
-    );
-    const error = await validate(teste);
-
-    if (error.length === 0) { */
-    this.customerRepository.insert(data);
+  public async insert(data: CreateCustomerInterface) {
+    const oi = await this.customerRepository.insert(data);
+    console.log(oi);
+    return oi;
   }
 
-  // return error;
 
-  async update(id: string, {
-    name, username, email, password, gems,
-  }: CreateCustomerParams): Promise<void> {
+  public async update(id: string, data: CreateCustomerParams): Promise<void> {
     /*     const teste = getRepository(Customer).create({
       name,
       username,
@@ -39,9 +37,9 @@ export class CustomerService {
     const aswer = await getRepository(Customer)
       .createQueryBuilder()
       .update(Customer)
-      .set({
-        name, username, email, password, gems,
-      })
+      .set(
+        data,
+      )
       .where('id = :id', { id })
       .execute();
     console.log(aswer);

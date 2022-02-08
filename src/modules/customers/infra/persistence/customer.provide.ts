@@ -1,24 +1,36 @@
 import { ValidationError } from 'class-validator';
-import { CreateCustomerParams } from '../../application/dto/customer.interface';
+import { getRepository } from 'typeorm';
+import { CreateCustomerInterface, CreateCustomerParams } from '../../application/dto/customer.interface';
 import { Customer } from '../../domain/Customer';
+import CustomerRepositoryCreate from '../../domain/customerRepository';
 import { ICustomerService } from './protocol/ICustomerService';
 
 export class CustomerRepository implements ICustomerService {
-  private customer: Customer[] = [];
+  private customer: Customer;
 
-  async insert(data: CreateCustomerParams): Promise<void> {
-    this.customer.push(data);
+  private customerRepository: CustomerRepositoryCreate;
+
+  public async insert(data: CreateCustomerInterface) {
+    const newCustomer = this.customerRepository.create(data);
+    const result = await getRepository(Customer)
+      .createQueryBuilder()
+      .insert()
+      .into(Customer)
+      .values(newCustomer)
+      .execute();
+    console.log(newCustomer, result);
+    return result;
   }
 
-  update(
+  public update(
     id: string,
     data
   : CreateCustomerParams,
   ) {
-    this.customer.push(data);
+    this.customerRepository.create(data);
   }
 
-  delete(id: string) {
-    this.customer.shift();
+  public delete(id: string) {
+    this.customerRepository.delete(id);
   }
 }

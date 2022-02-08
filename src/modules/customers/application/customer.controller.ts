@@ -4,43 +4,48 @@ import { getRepository } from 'typeorm';
 import { ValidationError } from 'class-validator';
 import { Customer } from '../domain/Customer';
 import { CustomerService } from '../infra/persistence/customer.service';
-import { ICustomerService } from '../infra/persistence/protocol/ICustomerService';
+import { IService } from '../infra/persistence/protocol/IServiceProtocol';
+import { CreateCustomerInterface, CreateCustomerParams } from './dto/customer.interface';
 
 export class CustomerController {
-  constructor(private readonly customerService: ICustomerService) {}
+  private readonly customerService2: IService;
+
+  constructor(
+    customerService2: IService,
+  ) {}
 
   async createCustomer(req: Request, res: Response) {
+    let {
+      name, username, email, password, gems,
+    } = req.body;
+
+    if (!name || !username || !email || !password || !gems) {
+      return res.status(400)
+        .send({
+          error: 'Você não inseriu valores válidos cheque novamente!',
+        });
+    }
+
+    password = await bcrypt.hash(password, 10);
+    console.log(password);
+
     try {
-      const {
-        name, username, email, apassword, gems,
-      } = req.body;
-
-      if (!name || !username || !email || !apassword || !gems) {
-        return res.status(400)
-          .send({
-            error: 'Você não inseriu valores válidos cheque novamente!',
-          });
-      }
-
-      const password = await bcrypt.hash(apassword, 10);
-
-      const create = await this.customerService.insert({
+      const create = await this.customerService2.insert({
         name, username, email, password, gems,
       });
-
-      
-        return res.status(201)
-          .json({
-            sucess: 'Dados registrados com sucesso!',
-          });
-      
-
-      // const result = create.map((e) => e.constraints);
-
-      //return res.status(406).json({ error: 'dsds' });
+      console.log(create);
     } catch (e) {
-      return res.status(406).json('E-mail ou Usuário já existe!');
+      return res.status(406).send(e);
     }
+
+    return res.status(201)
+      .json({
+        sucess: 'Dados registrados com sucesso!',
+      });
+
+    // const result = create.map((e) => e.constraints);
+
+    // return res.status(406).json({ error: 'dsds' });
   }
 
   async deleteCustomer(req: Request, res: Response) {
@@ -54,7 +59,7 @@ export class CustomerController {
       if (!existCostumer) {
         return res.status(400).json('Error, Usuário não existe');
       }
-      await this.customerService.delete(id);
+      await this.customerService2.delete(id);
 
       return res.status(202).json({ suscess: 'Usuário deletado com sucesso!' });
     } catch (error) {
@@ -78,7 +83,7 @@ export class CustomerController {
 
       const password = await bcrypt.hash(apassword, 10);
 
-      const update = await this.customerService.update(id, {
+      const update = await this.customerService2.update(id, {
         name, username, email, password, gems,
       });
 
